@@ -11,7 +11,7 @@ function readonly(target, key, descriptor){
 function uppercase(target, key, descriptor){
     const fn = descriptor.value;
 
-    descriptor.value = () => {
+    descriptor.get = () => {
       const result = fn.call(target);
       return result && result.toUpperCase();
     };
