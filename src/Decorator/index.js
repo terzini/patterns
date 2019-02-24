@@ -10,9 +10,14 @@ function readonly(target, key, descriptor){
 
 function uppercase(target, key, descriptor){
     const fn = descriptor.value;
+// HOW TO DO IT WITH ARROW FUNCTION ???
+// descriptor.value = () => {
+//     const result = fn.call(target); 
+//     return result && result.toUpperCase();
+//   };
 
-    descriptor.get = () => {
-      const result = fn.call(target);
+    descriptor.value = function(){
+      const result = fn.call(this); 
       return result && result.toUpperCase();
     };
 }
@@ -34,8 +39,8 @@ class User{
         this.username = value;
     }
 
-    //@readonly
-    // @uppercase
+    @readonly
+    @uppercase
     getUsername(){
         // console.log( ' User: username: ', this.username );
         return this.username;

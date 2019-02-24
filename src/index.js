@@ -25,7 +25,8 @@ CommandManager.execute( Receiver, {action: "getAll"});
 
 var user = new User();
 user.setUsername("nikoleta");
-user.getUsername();
+const name = user.getUsername();
+console.log('name: ', name );
 //user.getUsername = () => { console.log('Try to override getUsername')};
 //user.getUsername();
 console.log( "User: styles added with decorator: ", user.styles );
