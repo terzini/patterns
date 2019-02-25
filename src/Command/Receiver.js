@@ -10,8 +10,8 @@ const Receiver = (function(){
             _items = _items.slice(0, index).concat(_items.slice(index + 1));
         },
         getAll: () => {
-            console.log( "All items: ", _items );
-            // return _items;
+            console.log( "Execute getAll: ", _items );
+            return _items;
         }
     }
 })();

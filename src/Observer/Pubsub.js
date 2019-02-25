@@ -3,7 +3,7 @@ const PubSub = (function() {
 
     var subUid = -1;
 
-    publish = ( topic, args ) => {
+    const publish = ( topic, args ) => {
        if ( !topics[topic] ) {
            return false;
        }
@@ -14,7 +14,7 @@ const PubSub = (function() {
        return this;
    };
 
-    subscribe = ( topic, callback ) => {
+    const subscribe = ( topic, callback ) => {
        if (!topics[topic]) {
            topics[topic] = [];
        }
@@ -24,7 +24,8 @@ const PubSub = (function() {
        return id;
    };
 
-   unsubscribe = ( id ) => {
+   const unsubscribe = ( id ) => {
+       console.log("--- topics: ", topics );
        topics.forEach(t => {
            return t = t.filter( subscriber => subscriber.id !== id );
        })
@@ -36,4 +37,6 @@ const PubSub = (function() {
        subscribe, 
        unsubscribe
    }
-}( ));
+})();
+
+export default PubSub;

@@ -8,13 +8,13 @@ function readonly(target, key, descriptor){
     return descriptor;
 }
 
-function uppercase(target, key, descriptor){
-    const fn = descriptor.value;
-// HOW TO DO IT WITH ARROW FUNCTION ???
+// HOW TO DO IT WITH ARROW FUNCTION ?
 // descriptor.value = () => {
 //     const result = fn.call(target); 
 //     return result && result.toUpperCase();
 //   };
+function uppercase(target, key, descriptor){
+    const fn = descriptor.value;
 
     descriptor.value = function(){
       const result = fn.call(this); 
@@ -23,13 +23,13 @@ function uppercase(target, key, descriptor){
 }
 
 const withStyles = (value) => (target) => {
-    console.log( "target: ", target ); 
     // in the case of decorating a Class, target is the constructor of the Class you’re decorating
-   
+    // console.log( "target: ", target ); 
+       
     target.prototype.styles = value;
 }
 
-@withStyles({style1: "style1"})
+@withStyles({styles: "style_1"})
 class User{
     constructor(){
         this.username = "";
@@ -42,7 +42,6 @@ class User{
     @readonly
     @uppercase
     getUsername(){
-        // console.log( ' User: username: ', this.username );
         return this.username;
     }
 }
