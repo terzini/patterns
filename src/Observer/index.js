@@ -1,3 +1,4 @@
 import PubSub from './Pubsub';
+import Observable from './Observable';
 
-export default PubSub;
+export { PubSub, Observable };

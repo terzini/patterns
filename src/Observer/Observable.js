@@ -1,21 +1,18 @@
-const PubSub = {};
-
-
-(function(p) {
+const Observable = (function() {
     var topics = {};
+
     var subUid = -1;
 
-    p.publish = function( topic, args ) {
+    const publish = ( topic, args ) => {
        if ( !topics[topic] ) {
            return false;
        }
 
        const subscribers = topics[topic];
        subscribers.forEach( s => s.callback.call( null, args));
-       return this;
    };
 
-    p.subscribe = function( topic, callback ) {
+    const subscribe = ( topic, callback ) => {
        if (!topics[topic]) {
            topics[topic] = [];
        }
@@ -25,12 +22,17 @@ const PubSub = {};
        return id;
    };
 
-   p.unsubscribe = function( id ) {
+   const unsubscribe = ( id ) => {
         Object.keys(topics).forEach( k => {
             return topics[k] = topics[k].filter( subscriber => subscriber.id !== id );
         })
-    return this;
    };
-})(PubSub);
 
-export default PubSub;
+   return {
+       publish, 
+       subscribe, 
+       unsubscribe
+   }
+})();
+
+export default Observable;

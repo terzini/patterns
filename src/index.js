@@ -2,7 +2,8 @@ import {BaseModule, RevealingModule} from './Module';
 import CommandManager from './Command';
 import Receiver from './Command/Receiver';
 import User from './Decorator';
-import PubSub from './Observer';
+import { Observable, PubSub } from './Observer';
+import {middlewareChain, promiseChain} from './Chain';
 
 
 console.log('---Base Module: Age: ',  BaseModule.addAge(20));
@@ -41,10 +42,32 @@ const topics = {
     SCROLL: "SCROLL",
 }
 
+// const idClick_1 = Observable.subscribe( topics.CLICK, () => { console.log("On CLICK: cb 1")});
+// const idClick_2 = Observable.subscribe( topics.CLICK, () => { console.log("On CLICK: cb 2")});
+// const idScroll_1 = Observable.subscribe( topics.SCROLL, () => { console.log("On SCROLL: cb 1")});
+
+// Observable.publish(topics.CLICK);
+// Observable.publish(topics.SCROLL);
+// Observable.unsubscribe(idClick_1);
+
+
 const idClick_1 = PubSub.subscribe( topics.CLICK, () => { console.log("On CLICK: cb 1")});
 const idClick_2 = PubSub.subscribe( topics.CLICK, () => { console.log("On CLICK: cb 2")});
 const idScroll_1 = PubSub.subscribe( topics.SCROLL, () => { console.log("On SCROLL: cb 1")});
 
-PubSub.publish(topics.CLICK);
-PubSub.publish(topics.SCROLL);
+PubSub.publish(topics.CLICK).publish(topics.SCROLL);
 PubSub.unsubscribe(idClick_1);
+
+console.log("  ");
+
+const request = { method: "GET", url: 'htp://test.com?param1=value1&param2&param3=value3', headers: {'Content-Type': 'application/json'}, body: {}};
+const env = { NODE_ENV: "dev"};
+
+const middlewareChainProduction = middlewareChain(env);
+
+middlewareChainProduction(request);
+console.log("CHAIN: request: ", request );
+
+
+const promiseChainProduction = promiseChain(env);
+promiseChainProduction(request)
