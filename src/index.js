@@ -63,11 +63,11 @@ console.log("  ");
 const request = { method: "GET", url: 'htp://test.com?param1=value1&param2&param3=value3', headers: {'Content-Type': 'application/json'}, body: {}};
 const env = { NODE_ENV: "dev"};
 
-const middlewareChainProduction = middlewareChain(env);
-
-middlewareChainProduction(request);
-console.log("CHAIN: request: ", request );
+// const middlewareChainProduction = middlewareChain(env);
+// middlewareChainProduction(request);
+// console.log("CHAIN M: request: ", request );
 
 
 const promiseChainProduction = promiseChain(env);
 promiseChainProduction(request)
+console.log("CHAIN P: request: ", request);

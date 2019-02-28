@@ -22,7 +22,7 @@
 
  // Promise for setting the query params in the request body
 const setParams = (env) => context => {
-    return new Promise(() => {
+    return new Promise((resolve, reject) => {
         const start = ( context.url && context.url.indexOf('?') > -1 ) ? context.url.indexOf('?') + 1 : -1;
     
         if( start > -1 ){
@@ -39,9 +39,9 @@ const setParams = (env) => context => {
  }
 
  const promiseChain = env => context => Promise.resolve(context)
-    .then(authenticate)
-    .then(bodyParser)
-    .then(setParams)
+    .then(authenticate(env))
+    .then(bodyParser(env))
+    .then(setParams(env))
     .catch(err => console.log('ERROR: ', err));
 
 export default promiseChain;
