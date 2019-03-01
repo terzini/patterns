@@ -1,9 +1,10 @@
-import {BaseModule, RevealingModule} from './Module';
+import { BaseModule, RevealingModule } from './Module';
 import CommandManager from './Command';
 import Receiver from './Command/Receiver';
 import User from './Decorator';
 import { Observable, PubSub } from './Observer';
-import {middlewareChain, promiseChain} from './Chain';
+import { middlewareChain, promiseChain } from './Chain';
+import { SimpleLogger, EnhancedLogger, LoggerAdapter } from './Adapter'
 
 
 console.log('---Base Module: Age: ',  BaseModule.addAge(20));
@@ -30,7 +31,7 @@ console.log("  ");
 
 var user = new User();
 user.setUsername("nikoleta");
-console.log('Decorator: decorated name: ', user.getUsername() );
+console.log( "Decorator: decorated name: ", user.getUsername() );
 console.log( "Decorator: property injected to class with decorator: ", user.styles );
 // user.getUsername = () => { console.log('Try to override getUsername')};
 
@@ -63,11 +64,34 @@ console.log("  ");
 const request = { method: "GET", url: 'htp://test.com?param1=value1&param2&param3=value3', headers: {'Content-Type': 'application/json'}, body: {}};
 const env = { NODE_ENV: "dev"};
 
-// const middlewareChainProduction = middlewareChain(env);
-// middlewareChainProduction(request);
-// console.log("CHAIN M: request: ", request );
+const middlewareChainProduction = middlewareChain(env);
+middlewareChainProduction(request);
+console.log("CHAIN M: request: ", request );
 
 
 const promiseChainProduction = promiseChain(env);
 promiseChainProduction(request)
 console.log("CHAIN P: request: ", request);
+
+
+console.log("  ");
+
+const message = "simple message";
+const messageWithError = { error: "Error message"};
+const data = { data: { title: "some stuff"}};
+
+let logger = new SimpleLogger();
+logger.log( message );
+logger.log( messageWithError );
+
+logger= new EnhancedLogger();
+logger.logWithData( message );
+logger.logWithData( messageWithError);
+logger.logWithData( message, data )
+
+logger = new LoggerAdapter();
+logger.log( message );
+logger.log( messageWithError );
+logger.logWithData(message, data);
+
+

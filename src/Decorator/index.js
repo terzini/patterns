@@ -8,11 +8,7 @@ function readonly(target, key, descriptor){
     return descriptor;
 }
 
-// HOW TO DO IT WITH ARROW FUNCTION ?
-// descriptor.value = () => {
-//     const result = fn.call(target); 
-//     return result && result.toUpperCase();
-//   };
+
 function uppercase(target, key, descriptor){
     const fn = descriptor.value;
 
@@ -23,9 +19,8 @@ function uppercase(target, key, descriptor){
 }
 
 const withStyles = (value) => (target) => {
-    // in the case of decorating a Class, target is the constructor of the Class you’re decorating
-    // console.log( "target: ", target ); 
-       
+    // // In case of decorating a Class, target is the constructor of the Class we are decorating
+    // console.log( "target: ", target );        
     target.prototype.styles = value;
 }
 

@@ -1,6 +1,7 @@
-const error = message => console.log('ERROR:', message);
+
 
 const buildMiddleware = (...middlewares ) => env => context => {
+        const error = message => console.log('ERROR:', message);
         const final = context => context;
         const chain = middlewares.reduceRight( (next, middleware) => middleware(error, env, next), final );
         return chain(context);
